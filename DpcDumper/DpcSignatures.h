@@ -8,8 +8,8 @@
 */
 
 // Indices for the KPRCB.DpcData array
-#define THREADED_DPC_DATA_INDEX 0
-#define NORMAL_DPC_DATA_INDEX 1
+#define THREADED_DPC_DATA_INDEX 1
+#define NORMAL_DPC_DATA_INDEX 0
 
 // nameless struct/union
 #pragma warning(disable : 4201)
