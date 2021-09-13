@@ -36,6 +36,10 @@ NTSTATUS DriverEntry(_In_ PDRIVER_OBJECT DriverObject, _In_ PUNICODE_STRING Regi
 
 ULONG_PTR ProcessorDumpDpcQueueIpi(ULONG_PTR Arg) {
 	UNREFERENCED_PARAMETER(Arg);
+	
+	KIRQL OldIrql;
+	KeRaiseIrql(HIGH_LEVEL, &OldIrql);
+
 	KPRCB* CurrentCpu = KeGetCurrentPrcb();
 	
 	unsigned __int8 ProcessorNumber = (unsigned __int8) CurrentCpu->Number;
@@ -44,6 +48,7 @@ ULONG_PTR ProcessorDumpDpcQueueIpi(ULONG_PTR Arg) {
 	DumpDpcData(&CurrentCpu->DpcData[NORMAL_DPC_DATA_INDEX]);
 	DumpDpcData(&CurrentCpu->DpcData[THREADED_DPC_DATA_INDEX]);
 	
+	KeLowerIrql(OldIrql);
 	return 0;
 }
 
